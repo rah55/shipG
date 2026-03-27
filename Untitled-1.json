@@ -1,0 +1,216 @@
+{
+  "message": "Shipper rates fetched successfully",
+  "errors": [],
+  "data": {
+    "pickup_fee": 0,
+    "rate": [
+      {
+        "is_tariff": "1",
+        "provider_code": "sgdirectparclluspsuniunitariff",
+        "display_name": "ShipGlobal Direct Commercial",
+        "helper_text": "",
+        "criteria_text": "",
+        "helper_text_bottom": "As per US Government advisory, a tariff fee will be charged.",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": false,
+        "transit_time": "7 - 10 Days",
+        "rate": 1508,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 1508,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 513,
+        "SUBTOTAL_FEE": 2171,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 150,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "TARIFF_FEE",
+              "name": "Tariff Fee",
+              "value": 513
+            },
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 150
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 663
+        }
+      },
+      {
+        "is_tariff": "0",
+        "provider_code": "sgdirectparclljfk",
+        "display_name": "ShipGlobal Direct",
+        "helper_text": "",
+        "criteria_text": "",
+        "helper_text_bottom": "",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": true,
+        "transit_time": "7 - 10 Days",
+        "rate": 1558,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 1558,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 0,
+        "SUBTOTAL_FEE": 1568,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 10,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 10
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 10
+        }
+      },
+      {
+        "is_tariff": "0",
+        "provider_code": "sgparclluspsjfk",
+        "display_name": "ShipGlobal USPS Special",
+        "helper_text": "",
+        "criteria_text": "",
+        "helper_text_bottom": "",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": true,
+        "transit_time": "7 - 10 Days",
+        "rate": 1600,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 1600,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 0,
+        "SUBTOTAL_FEE": 1750,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 150,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 150
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 150
+        }
+      },
+      {
+        "is_tariff": "0",
+        "provider_code": "sgpremparclljfk",
+        "display_name": "ShipGlobal Premium",
+        "helper_text": "",
+        "criteria_text": "",
+        "helper_text_bottom": "",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": true,
+        "transit_time": "6 - 9 Days",
+        "rate": 1680,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 1680,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 0,
+        "SUBTOTAL_FEE": 1830,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 150,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 150
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 150
+        }
+      },
+      {
+        "is_tariff": "0",
+        "provider_code": "sgfcusps",
+        "display_name": "ShipGlobal First Class",
+        "helper_text": "Order cancellation not allowed after 10 days of booking!",
+        "criteria_text": "",
+        "helper_text_bottom": "",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": true,
+        "transit_time": "5 - 8 Days",
+        "rate": 2071,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 2071,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 0,
+        "SUBTOTAL_FEE": 2221,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 150,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 150
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 150
+        }
+      },
+      {
+        "is_tariff": "0",
+        "provider_code": "sgexppylonupsairjfkmedium",
+        "display_name": "Shipglobal Express",
+        "helper_text": "",
+        "criteria_text": "",
+        "helper_text_bottom": "",
+        "image": "https://app.shipglobal.in/assets/media/shipglobal/provider/sg.png",
+        "ddp_badge": true,
+        "transit_time": "4 - 6 Days",
+        "rate": 2111,
+        "bill_weight_kg": 1,
+        "remote_charges": 0,
+        "handling_charges": 0,
+        "provider_status": true,
+        "LOGISTIC_FEE": 2111,
+        "REMOTE_FEE": 0,
+        "HANDLING_FEE": 0,
+        "SURCHARGE_FEE": 0,
+        "TARIFF_FEE": 0,
+        "SUBTOTAL_FEE": 2261,
+        "GLOBAL_DISRUPTION_ADJUSTMENT": 150,
+        "OTHER_FEE_DETAIL": {
+          "INFO": [
+            {
+              "key": "GLOBAL_DISRUPTION_ADJUSTMENT",
+              "name": "Global Disruption Adjustment",
+              "value": 150
+            }
+          ],
+          "OTHERS_FEE_TOTAL": 150
+        }
+      }
+    ],
+    "package_weight": 1000,
+    "volume_weight": 1,
+    "bill_weight": 1000,
+    "notices": []
+  }
+}

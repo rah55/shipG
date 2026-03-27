@@ -10,20 +10,24 @@ import {
 } from "@/components/ui/combobox"
 import { Button } from "./ui/button"
 
-
-function StateComponent({ onChange, data,  }: { data: any; onChange: any; }) {
-  console.log(data)
+function StateComponent({ onChange, data ,value }: { data: any; onChange: any ;value:string}) {
+  
   return (
-    <Combobox    items={data} onValueChange={onChange}>
+    <Combobox items={data} onValueChange={onChange} value={value}  >
       <ComboboxTrigger
         render={
-          <Button className="h-11 w-64 justify-between font-normal bg-white text-black border border-gray-200">
-            <ComboboxValue  placeholder="Select State 🔽" />
+          <Button className="h-11 w-64 justify-between border border-gray-200 bg-white font-normal text-black">
+            <ComboboxValue>
+              {(val) =>
+                data.find((item: any) => item.state_name === val)
+                  ?.state_name || "Select State 🔽"
+              }
+            </ComboboxValue>
           </Button>
         }
       />
       <ComboboxContent>
-        <ComboboxInput  showTrigger={false} placeholder="Search" />
+        <ComboboxInput showTrigger={false} placeholder="Search" />
         <ComboboxEmpty>No states found</ComboboxEmpty>
         <ComboboxList>
           {(item) => (

@@ -15,17 +15,27 @@ import { Button } from "./ui/button"
 import Countries from "./Countries"
 
 import NewCard from "./NewCard"
-import { formSchema } from "@/utils/formSchema"
-import { useDispatch } from "react-redux"
-import { addData } from "@/utils/formSlice"
+import { formShipSchema } from "@/utils/formSchema"
+import { useDispatch, useSelector } from "react-redux"
+import { addFirstFormData } from "@/utils/formSlice"
 import { useEffect, useState } from "react"
 import StateComponent from "./StateComponent"
+import FieldComponent from "./FieldComponent"
+import { useResetForm } from "@/Hooks/useResetForm"
+import useCountryState from "@/Hooks/useCountryState"
 
-function ShipForm() {
+interface ShipFormProps {
+  onClick: () => void // parent callback to unlock shipment info
+}
+
+function ShipForm({ onClick }: ShipFormProps) {
+  // const [states, setStates] = useState([])
+  const { formslice }: any = useSelector((data: any) => data)
   const dispatch = useDispatch()
-  const [states, setStates] = useState([])
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  console.log(formslice.shipments)
+  
+  const form = useForm<z.infer<typeof formShipSchema>>({
+    resolver: zodResolver(formShipSchema),
     defaultValues: {
       firstname: "",
       lastname: "",
@@ -40,50 +50,58 @@ function ShipForm() {
       state: "",
     },
   })
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data)
-    dispatch(addData(data))
-  }
-
   const country_id = form.watch("country")
+  
+  useResetForm(formslice,form); // formresetschema  
 
-  useEffect(() => {
-    async function handleSumit(country_id: string) {
-      if (!country_id) return
-      const url =
-        "https://qa2.franchise.backend.shipgl.in/api/v1/location/statesv2"
-      try {
-        const data = { state_country_code: country_id }
-        const response = await fetch(url, {
-          method: "POST", // Specify the method
-          headers: {
-            "Content-Type": "application/json", // Inform the server of the data format
-          },
-          body: JSON.stringify(data), // Convert JS object to JSON string
-        })
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`) // Manual error check
-        }
 
-        const result = await response.json() // Parse the JSON response
 
-        console.log("Success:", result?.data?.states)
-        setStates(result?.data?.states)
-      } catch (error) {
-        console.error("Error:", error) // Catches network issues
-      }
-    }
-    handleSumit(country_id)
-  }, [country_id])
+  function onSubmit(data: z.infer<typeof formShipSchema>) {
+    dispatch(addFirstFormData(data))
+    onClick()
+  }
+const { states } = useCountryState(country_id);
+
+  // useEffect(() => {
+  //   async function handleSumit(country_id: string) {
+  //     if (!country_id) return
+  //     const url =
+  //       "https://qa2.franchise.backend.shipgl.in/api/v1/location/statesv2"
+  //     try {
+  //       const data = { state_country_code: country_id }
+  //       const response = await fetch(url, {
+  //         method: "POST", // Specify the method
+  //         headers: {
+  //           "Content-Type": "application/json", // Inform the server of the data format
+  //         },
+  //         body: JSON.stringify(data), // Convert JS object to JSON string
+  //       })
+
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`) // Manual error check
+  //       }
+
+  //       const result = await response.json() // Parse the JSON response
+
+  //       setStates(result?.data?.states)
+  //     } catch (error) {
+  //       console.error("Error:", error) // Catches network issues
+  //     }
+  //   }
+  //   handleSumit(country_id)
+  // }, [country_id])
 
   return (
     <NewCard
-      heading="Create Order"
+    heading=""
       // classname="p-12"
       xyz={
-        <form id="shipform" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="p-5"
+          id="shipform"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <FieldSet>
             <h1 className="font-bold">Personal Details</h1>
             <FieldGroup className="flex">
@@ -92,24 +110,13 @@ function ShipForm() {
                   name="firstname"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field
-                      className="max-w-sm p-2"
-                      data-invalid={fieldState.invalid}
-                    >
-                      <FieldLabel htmlFor="shipform-firstname">
-                        First Name <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-firstname"
-                        autoComplete="off"
-                        placeholder="Enter First Name..."
-                        className="p-5 placeholder-red-300"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="First Name"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter First Name..."
+                      htmlfor="shipform-firstname"
+                    />
                   )}
                 ></Controller>
 
@@ -117,24 +124,13 @@ function ShipForm() {
                   name="lastname"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field
-                      className="max-w-sm p-2"
-                      data-invalid={fieldState.invalid}
-                    >
-                      <FieldLabel htmlFor="shipform-lastname">
-                        Last Name <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-lastname"
-                        autoComplete="off"
-                        placeholder="Enter Last Name..."
-                        className="placeholder-gray-200::placeholder p-5"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Last Name"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Last Name..."
+                      htmlfor="shipform-lastname"
+                    />
                   )}
                 ></Controller>
 
@@ -142,22 +138,13 @@ function ShipForm() {
                   name="mobileNumber"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-mobile">
-                        Mobile Number <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-mobile"
-                        autoComplete="off"
-                        placeholder="Enter Mobile Number"
-                        className="placeholder-gray-200::placeholder p-5"
-                      />
-
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Mobile Number"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Mobile No..."
+                      htmlfor="shipform-mobile"
+                    />
                   )}
                 ></Controller>
 
@@ -165,22 +152,13 @@ function ShipForm() {
                   name="email"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-email">
-                        Email <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-mobile"
-                        autoComplete="off"
-                        placeholder="Enter EmailID"
-                        className="placeholder-gray-200::placeholder p-5"
-                      />
-
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Email"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Email ID "
+                      htmlfor="shipform-email"
+                    />
                   )}
                 ></Controller>
               </div>
@@ -197,11 +175,14 @@ function ShipForm() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-email">
+                      <FieldLabel htmlFor="shipform-country">
                         Country <span className="text-red-600">*</span>
                       </FieldLabel>
 
-                      <Countries onChange={field.onChange} />
+                      <Countries
+                        onChange={field.onChange}
+                        value={field.value}
+                      />
 
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -209,16 +190,20 @@ function ShipForm() {
                     </Field>
                   )}
                 ></Controller>
-                <Controller 
+                <Controller
                   name="state"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-email">
+                      <FieldLabel htmlFor="shipform-state">
                         State <span className="text-red-600">*</span>
                       </FieldLabel>
 
-                      <StateComponent  data={states} onChange={field.onChange} />
+                      <StateComponent
+                        data={states}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
 
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -231,21 +216,13 @@ function ShipForm() {
                   name="address1"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-address1">
-                        Address1 <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-address1"
-                        autoComplete="off"
-                        placeholder="Enter Address1..."
-                        className="placeholder-gray-200::placeholder p-5"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Address1"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Address1... "
+                      htmlfor="shipform-address1"
+                    />
                   )}
                 ></Controller>
 
@@ -253,21 +230,13 @@ function ShipForm() {
                   name="address2"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-address2">
-                        Address2 <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-address2"
-                        autoComplete="off"
-                        placeholder="Enter Address2..."
-                        className="placeholder-gray-200::placeholder p-5"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Address2"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Address2... "
+                      htmlfor="shipform-address2"
+                    />
                   )}
                 ></Controller>
 
@@ -294,21 +263,13 @@ function ShipForm() {
                   name="city"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field className="max-w-sm p-2">
-                      <FieldLabel htmlFor="shipform-city">
-                        City <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-city"
-                        autoComplete="off"
-                        placeholder="Enter City..."
-                        className="placeholder-gray-200::placeholder p-5"
-                      ></Input>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="City"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter City... "
+                      htmlfor="shipform-city"
+                    />
                   )}
                 ></Controller>
 
@@ -316,34 +277,26 @@ function ShipForm() {
                   name="pincode"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field>
-                      <FieldLabel htmlFor="shipform-pincode">
-                        Pincode
-                        <span className="text-red-600">*</span>
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="shipform-pincode"
-                        placeholder="Enter Pincode..."
-                        className="placeholder-gray-200::placeholder p-5"
-                      ></Input>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <FieldComponent
+                      title="Pincode"
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="Enter Pincode... "
+                      htmlfor="shipform-pincode"
+                    />
                   )}
                 ></Controller>
               </div>
             </FieldGroup>
           </FieldSet>
           <div className="flex justify-end">
-            <Button type="submit" className="">
-              Submit
+            <Button type="submit" form="shipform">
+              continue
             </Button>
           </div>
         </form>
       }
-      subheading="Create Single Box order"
+      subheading="Create order"
     />
   )
 }

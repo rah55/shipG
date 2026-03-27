@@ -1,39 +1,73 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
+import { X } from "lucide-react"
 
-// Define the type of a single data item (adjust as needed)
 interface FormData {
-  // example fields
-  
-  
-      firstname:string,
-      lastname: string,
-      mobileNumber: string,
-      email:string,
-      country: string,
-      address1: string,
-      address2: string,
-    
+  firstname: string
+  lastname: string
+  mobileNumber: string
+  email: string
+  country: string
+  address1: string
+  address2: string
 }
 
-// Define the state type
+interface secondFormData {
+  invoiceNumber: string
+  invoiceDate: string
+  invoiceCurrency: string
+  invoiceOrder: string
+  invoiceIOSS: string
+  weight: string
+  length: string
+  breadth: string
+  height: string
+  productName: string
+  productHSN: string
+  productSKU: string
+  productQty: string
+  productPrice: string
+  productIGST: string
+}
+
+interface Shipment {
+  firstForm?: FormData
+  secondForm?: secondFormData
+}
+
 interface FormState {
-  data: FormData[]
+  shipments: Shipment[]
 }
 
 const initialState: FormState = {
-  data: [],
+  shipments: [],
 }
 
 const formSlice = createSlice({
   name: "shipform",
   initialState,
   reducers: {
-    addData: (state, action: PayloadAction<FormData>) => {
-      state.data.push(action.payload)
+    addFirstFormData: (state, action: PayloadAction<FormData>) => {
+      if (state.shipments.length === 0) {
+        state.shipments.push({})
+      }
+
+      state.shipments[state.shipments.length - 1].firstForm = action.payload
+    },
+
+    addSecondFormData: (state, action: PayloadAction<secondFormData>) => {
+      if (state.shipments.length === 0) {
+        state.shipments.push({})
+      }
+
+      state.shipments[state.shipments.length - 1].secondForm = action.payload
+    },
+    clearData: (state) => {
+      state.shipments = []
     },
   },
 })
 
-export const { addData } = formSlice.actions
+export const { addFirstFormData, addSecondFormData, clearData } =
+  formSlice.actions
 export default formSlice.reducer

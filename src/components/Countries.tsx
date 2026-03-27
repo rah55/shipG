@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Combobox,
   ComboboxContent,
@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/combobox"
 import { Button } from "./ui/button"
 
-function Countries({ onChange }: { onChange: any }) {
+function Countries({ onChange,value }: { onChange: any;value:string }) {
   const [countries, setCountries] = useState<any>([])
 
-  //   console.log(value)
+ 
   async function fetchData() {
     try {
       const response = await fetch(
@@ -35,21 +35,23 @@ function Countries({ onChange }: { onChange: any }) {
     <>
       <Combobox
         items={countries}
-       defaultValue={countries[0]?.country_iso2}
+        // defaultValue={countries[0]?.country_iso2}
+        value={value}
         onValueChange={onChange}
+        
       >
         <ComboboxTrigger
           render={
             <Button
               variant="outline"
-              className="w-64 h-11  justify-between font-normal"
+              className="h-11 w-64 justify-between font-normal"
             >
               <ComboboxValue>
-        {(value) =>
-          countries.find((item:any) => item.country_iso2 === value)
-            ?.country_name || "Select Country 🔽"
-        }
-      </ComboboxValue>
+                {(value) =>
+                  countries.find((item: any) => item.country_iso2 === value)
+                    ?.country_name || "Select Country 🔽"
+                }
+              </ComboboxValue>
             </Button>
           }
         />
@@ -57,9 +59,9 @@ function Countries({ onChange }: { onChange: any }) {
           <ComboboxInput showTrigger={false} placeholder="Search" />
           <ComboboxEmpty>No items found.</ComboboxEmpty>
           <ComboboxList>
-            {(item ) => (
-              <ComboboxItem key={item.country_iso2} value={item.country_iso2}  >
-                {item.country_name+" (" + item.country_iso2 +")"}
+            {(item) => (
+              <ComboboxItem key={item.country_iso2} value={item.country_iso2}>
+                {item.country_name + " (" + item.country_iso2 + ")"}
               </ComboboxItem>
             )}
           </ComboboxList>
